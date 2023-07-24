@@ -1,13 +1,3 @@
-
-<?php
-
-$pdo = new PDO('mysql:host=localhost;port=3306;dbname=flight', 'root', '');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$statement = $pdo->prepare('SELECT * FROM airlines_table ORDER BY id DESC');
-$statement->execute();
-$results = $statement->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,23 +5,25 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>client</title>
+  <title>Client</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
-   <link rel="stylesheet" href="css/add.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
 </head>
-
-<body">
+<body>
   <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
+
+    <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
         <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
@@ -113,67 +105,10 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         </button>
       </div>
     </nav>
-                <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-                     <div class="card-body row">
-                  <h4 class="card-title">Search Result</h4>
-                  <div class="table-responsive pt-3">
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>
-                            Id
-                          </th>
-                          <th>
-                            Flight Name
-                          </th>
-                          <th>
-                            From
-                          </th>
-                          <th>
-                            To
-                          </th>
-                          <th>
-                            Avialible Seat
-                          </th>
-                          <th>
-                           Date
-                          </th>
-                          <th>
-                           Route
-                          </th>
-                          <th>
-                            Action
-                           </th>
-                        </tr>
-                      </thead>
-    <tbody>
-    <?php foreach ($results as $i => $result) { ?>
-        <tr>
-            <td><?php echo $result['id'] ?></td>
-            <td><?php echo $result['flight_name'] ?></td>
-            <td><?php echo $result['takeOffpoint'] ?></td>
-            <td><?php echo $result['destination'] ?></td>
-            <td><?php echo $result['totalSeat'] ?></td>
-            <td><?php echo $result['takeOffdate'] ?></td>
-            <td><?php echo $result['route'] ?></td>
-            <td>
-                <a href="details.php?id=<?php echo $result['id'] ?>" class="btn btn-sm btn-outline-success">Book</a>
-            </td>
-        </tr>
-    <?php } ?>
-    </tbody>
-                    </table>
-                  </div>
-                </div>
-    </div>
-  </div>
-</div>
+
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:../../partials/_sidebar.html -->
+      <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
@@ -202,65 +137,98 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
           </li>     
         </ul>
       </nav>
+
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <div class="row">
-            <div class="col-md-12 grid-margin">
-              <div class="d-flex justify-content-between flex-wrap">
-                <div class="d-flex align-items-end flex-wrap">
-                  <div class="mr-md-3 mr-xl-5">
-                    <h2>Welcome Back,</h2>
-                  </div>
-                  <div class="d-flex">
-                    <i class="mdi mdi-home text-muted hover-cursor"></i>
-                    <p class="text-primary mb-0 hover-cursor">&nbsp;/&nbsp;Search Airline</p>
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                  <div class="d-flex justify-content-between flex-wrap">
+                    <div class="d-flex align-items-end flex-wrap">
+                      <div class="mr-md-3 mr-xl-5">
+                        <h2>Booking History</h2>
+                      </div>
+                      <div class="d-flex">
+                        <i class="mdi mdi-home text-muted hover-cursor"></i>
+                        <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Dashboard&nbsp;/&nbsp;</p>
+                        <p class="text-muted mb-0 hover-cursor"></p>
+                        <p class="text-primary mb-0 hover-cursor">&nbsp;Bookings&nbsp;</p>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end flex-wrap">
+                      <button type="button" class="btn btn-light bg-white btn-icon mr-3 d-none d-md-block ">
+                        <i class="mdi mdi-download text-muted"></i>
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        <i class="mdi mdi-printer "></i>
+                      </button>
+                    
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="justify-content-center col-lg-12 grid-margin stretch-card">
+              </div>     
+        </div>
+        <!-- content-wrapper ends -->
+                  <div class="row">  
+            <div class="col-12 grid-margin">
                 <div class="container">
-                  <header>Search Flight</header>
-                    <form  action="" method="POST">
+                  <header>Add Flight</header>
+                    <form action="" method="POST">
+                    <div class="form first">
+                      <div class="details personal">
+                        <span class="title">Flight Details</span>
                         <div class="fields">
                         <div class="input-field">
-                            <label class="text-primary">Take of Point</label>
-                            <input type="text" name="contact" placeholder="From" required>
+                            <label>Flight Name</label>
+                            <input type="text" name="flightname" placeholder="Enter Flight Name" value="<?php echo $flightname ?>" required>
                         </div>
                         <div class="input-field">
-                            <label class="text-primary">Arrival of Point</label>
-                            <input type="text" name="contact" placeholder="To" required>
+                            <label>Take of Date</label>
+                            <input type="date" name="departDate" value="<?php echo $departDate ?>" placeholder="Enter Take of Date" required>
                         </div>
-                    </div>
-                        <div class="fields">
                         <div class="input-field">
-                            <label class="text-primary">Route</label>
-                            <select class="text-primary" required name="route">
-                                <option disabled selected>Select Route</option>
-                                <option>Straigth</option>
+                            <label>Take of Point</label>
+                            <input type="text" name="departFrom" placeholder="Enter Take of Point" value="<?php echo $departFrom ?>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Total Seat</label>
+                            <input type="number" name="totalSeat" placeholder="Enter Total Seat" value="<?php echo $totalSeat ?>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Class</label>
+                            <select required name="route">
+                                <option selected><?php echo $route ?></option>
                                 <option>Transit</option>
+                                <option>Striaght</option>
                             </select>
                         </div>
+                        <div class="input-field">
+                            <label>Arrival Point</label>
+                            <input type="text" name="departTo" value="<?php echo $departTo ?>" placeholder="Enter your Arrival Point" required>
                         </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                            <span class="btnText">Search</span>
+                    </div>
+                </div>
+                <div class="details ID">
+                        <div class="fields">
+                          <div class="input-field">
+                              <label>Flight ID</label>
+                              <input type="text" name="id" placeholder="Enter ID " value="<?php echo $id ?>" required>
+                            </div>
+                        </div>
+                        <button type="submit">
+                            <span class="btnText">Update</span>
                         </button>
+                        </div> 
+                    </div>
                   </form>
-                </div>     
+                </div>
             </div>
           </div>
         </div>
- 
-
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+        <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2018 <a href="https://www.urbanui.com/" target="_blank">Urbanui</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://www.urbanui.com/" target="_blank">Easy-flight</a>. All rights reserved.</span>
           </div>
         </footer>
         <!-- partial -->
@@ -275,14 +243,22 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
   <script src="vendors/base/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
+  <script src="vendors/chart.js/Chart.min.js"></script>
+  <script src="vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
   <!-- End plugin js for this page-->
   <!-- inject:js -->
   <script src="js/off-canvas.js"></script>
   <script src="js/hoverable-collapse.js"></script>
   <script src="js/template.js"></script>
   <!-- endinject -->
-
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <script src="js/data-table.js"></script>
+  <script src="js/jquery.dataTables.js"></script>
+  <script src="js/dataTables.bootstrap4.js"></script>
   <!-- End custom js for this page-->
 </body>
 
 </html>
+

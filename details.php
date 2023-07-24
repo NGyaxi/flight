@@ -137,40 +137,31 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-md-12 grid-margin">
-              <div class="d-flex justify-content-between flex-wrap">
-                <div class="d-flex align-items-end flex-wrap">
-                  <div class="mr-md-3 mr-xl-5">
-                    <h2>Welcome Back,</h2>
-                  </div>
-                  <div class="d-flex">
-                    <i class="mdi mdi-home text-muted hover-cursor"></i>
-                    <p class="text-primary mb-0 hover-cursor">&nbsp;/&nbsp;Search Airline</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
             <div class="justify-content-center col-lg-12 grid-margin stretch-card">
                 <div class="container">
                   <header>Customer Detail</header>
                     <form  action="" method="POST">
                         <div class="fields">
                         <div class="input-field">
-                            <label class="text-primary">Take of Point</label>
-                            <select class="text-primary" required name="route">
-                                <option disabled selected>Select Location</option>
-                            </select>
+                            <label class="text-primary">Fullname</label>
+                            <input type="text" name="flightname" placeholder="Enter Fulname" required>
                         </div>
                         <div class="input-field">
-                            <label class="text-primary">Arrival of Point</label>
-                            <select class="text-primary" required name="route">
-                                <option disabled selected>Select Class</option>
+                            <label class="text-primary">Cabin</label>
+                            <select class="text-primary" required name="cabin">
+                                <option disabled selected>Select Cabin</option>
                                 <option>Economy</option>
                                 <option>Business</option>
                                 <option>1st Class</option>
                             </select>
+                        </div>
+                        <div class="input-field">
+                            <label class="text-primary">Take of Point</label>
+                            <input type="text" name="contact" placeholder="eg. Ghana" required>
+                        </div>
+                        <div class="input-field">
+                            <label class="text-primary">Arrival of Point</label>
+                          <input type="text" name="contact" placeholder="eg. Japan" required>
                         </div>
                     </div>
                         <div class="fields">
@@ -182,9 +173,13 @@
                                 <option>Transit</option>
                             </select>
                         </div>
+                        <div class="input-field">
+                            <label class="text-primary">Contacts</label>
+                            <input type="text" name="contact" placeholder="Contacts" required>
+                        </div>
                         </div>
                         <button type="submit">
-                            <span class="btnText">Search</span>
+                            <a href="payment.php"><span class="btnText">Book</span></a>
                         </button>
                   </form>
                 </div>     
