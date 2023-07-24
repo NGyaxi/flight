@@ -26,11 +26,13 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
+                <a href="../../home.html">
                 <img src="../../images/a.png" alt="logo">
+            </a>
               </div>
               <h4>Hello! Reset Your Password</h4>
               <h6 class="font-weight-light">Reset to continue.</h6>
-              <form class="pt-3" id="loginForm" onsubmit="return validateLoginForm()">
+              <form class="pt-3"  id="loginForm" onsubmit="return validateLoginResetForm()">
                 <div class="alert alert-danger" id="loginError" style="display: none;"></div>
                 <div class="form-group">
                   <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
@@ -61,9 +63,68 @@
   <script src="../../js/off-canvas.js"></script>
   <script src="../../js/hoverable-collapse.js"></script>
   <script src="../../js/template.js"></script>
-  <script src="../../js/login.js"></script>
+  <!-- <script src="../../js/login.js"></script> -->
   <!-- endinject -->
+  <script>
+    // Function to fetch old user details from local storage
+    function fetchUserDetails() {
+      const userDetails = localStorage.getItem("userDetails");
+      if (userDetails) {
+        return JSON.parse(userDetails);
+      } else {
+        return {};
+      }
+    }
 
+    // Function to update user details in local storage
+    function updateUserDetails(email, password) {
+      const userDetails = fetchUserDetails();
+      userDetails.email = email;
+      userDetails.password = password;
+      localStorage.setItem("userDetails", JSON.stringify(userDetails));
+    }
+
+    // Function to validate and reset the password
+    function validateLoginResetForm() {
+      const emailInput = document.getElementById("exampleInputEmail1").value;
+      const passwordInput = document.getElementById("exampleInputPassword1").value;
+      const loginErrorDiv = document.getElementById("loginError");
+
+      // Reset the error message display on each form submission attempt
+      loginErrorDiv.style.display = "none";
+
+      // Validate email and password (you can add more validation as needed)
+      if (emailInput.trim() === "") {
+        loginErrorDiv.innerText = "Email field cannot be empty.";
+        loginErrorDiv.style.display = "block";
+        return false;
+      }
+
+      if (passwordInput.trim() === "") {
+        loginErrorDiv.innerText = "Password field cannot be empty.";
+        loginErrorDiv.style.display = "block";
+        return false;
+      }
+
+      // Update the user details in local storage
+      updateUserDetails(emailInput, passwordInput);
+
+      // Redirect to the login page after updating user details
+      // Replace "./login.html" with the correct path of your login page.
+      window.location.href = "./login.html";
+
+      // Prevent form submission (since we are handling it manually)
+      return false;
+    }
+
+    // Load old user details when the page loads (if available)
+    document.addEventListener("DOMContentLoaded", function() {
+      var userDetails = fetchUserDetails();
+      if (userDetails.email) {
+        document.getElementById("exampleInputEmail1").value = userDetails.email;
+      }
+    });
+  </script>
 
 </body>
 

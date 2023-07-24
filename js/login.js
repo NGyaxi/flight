@@ -51,11 +51,14 @@ function clearUserDetails() {
     const userDetails = getUserDetails();
   if (userDetails && email === userDetails.email && password === userDetails.password) {
     alert('Login successful!');
-    return true;
+    window.location.href = "../../index.html";
+    return false;
   } else {
     errorDiv.innerHTML = '<p>Invalid email or password.</p>';
     errorDiv.style.display = 'block';
-    return false;
+   
+   
+    return true;
   }
   }
 
@@ -117,11 +120,58 @@ function clearUserDetails() {
     return false;
   }
 
+  window.location.href = './login.html';
   // Registration successful, you can add your registration logic here.
   // For now, we'll just display an alert:
   storeUserDetails(email, password);
-  
+
   alert('Registration successful!');
   return true;
   }
 
+  // Function to fetch user data from local storage
+  function getUsersFromLocalStorage() {
+    const usersJSON = localStorage.getItem('userDetails');
+    return usersJSON ? JSON.parse(usersJSON) : [];
+  }
+
+  // Function to save user data to local storage
+  function saveUsersToLocalStorage(userDetails) {
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+  }
+
+  function validateLoginResetForm() {
+    const emailInput = document.getElementById('exampleInputEmail1');
+    const passwordInput = document.getElementById('exampleInputPassword1');
+    const loginErrorDiv = document.getElementById("loginError");
+
+    // Validate email and password
+    if (emailInput.trim() === "") {
+      loginErrorDiv.innerText = "Email field cannot be empty.";
+      loginErrorDiv.style.display = "block";
+      return false;
+    }
+
+    if (passwordInput.trim() === "") {
+      loginErrorDiv.innerText = "Password field cannot be empty.";
+      loginErrorDiv.style.display = "block";
+      return false;
+    }
+
+    // Get existing users from local storage
+    let userDetails = getUsersFromLocalStorage();
+
+    // Update user's password if the email exists in the database
+    const userIndex = userDetails.findIndex(u => u.email === email);
+    if (userIndex !== -1) {
+      userDetails[userIndex].password = password;
+      // Save updated users to local storage
+      saveUsersToLocalStorage(userDetails);
+    }
+
+    // Redirect to login page (replace './login.html' with the actual URL)
+    window.location.href = './login.html';
+
+    // Prevent form submission since we're redirecting manually
+    return false;
+  }
