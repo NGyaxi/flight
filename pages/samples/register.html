@@ -26,9 +26,7 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                <a href="../../home.html">
-                <img src="../../images/a.png" alt="logo">
-              </a>
+                <img src="../../images/logo.svg" alt="logo">
               </div>
               <h4>New here?</h4>
               <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
@@ -80,101 +78,7 @@
   <script src="../../js/hoverable-collapse.js"></script>
   <script src="../../js/template.js"></script>
   <!-- endinject -->
-  <script>
-    function storeUserDetails(email, password) {
-  const userDetails = {
-    email: email,
-    password: password,
-  };
-  localStorage.setItem('userDetails', JSON.stringify(userDetails));
-}
-
-// Function to get user details from Local Storage
-function getUserDetails() {
-  const userDetails = localStorage.getItem('userDetails');
-  return JSON.parse(userDetails);
-}
-// Function to clear user details from Local Storage (for logout functionality)
-function clearUserDetails() {
-  localStorage.removeItem('userDetails');
-}
-function validateRegistrationForm() {
-    const username = document.getElementById('exampleInputUsername1').value;
-    const email = document.getElementById('exampleInputEmail1').value;
-    const password = document.getElementById('exampleInputPassword1').value;
-    const confirmPassword = document.getElementById('exampleInputConfirmPassword1').value;
-    const errorDiv = document.getElementById('registrationError');
-    let hasError = false;
-
-    errorDiv.style.display = 'none';
-    errorDiv.innerHTML = '';
-
-    if (!username.trim()) {
-      hasError = true;
-      errorDiv.innerHTML += '<p>Please enter a username.</p>';
-      document.getElementById('exampleInputUsername1').style.borderColor = 'red';
-    } else {
-      document.getElementById('exampleInputUsername1').style.borderColor = '';
-    }
-
-    if (!email.trim()) {
-      hasError = true;
-      errorDiv.innerHTML += '<p>Please enter your email.</p>';
-      document.getElementById('exampleInputEmail1').style.borderColor = 'red';
-    } else {
-      document.getElementById('exampleInputEmail1').style.borderColor = '';
-    }
-
-    if (!password.trim()) {
-      hasError = true;
-      errorDiv.innerHTML += '<p>Please enter a password.</p>';
-      document.getElementById('exampleInputPassword1').style.borderColor = 'red';
-    } else {
-      document.getElementById('exampleInputPassword1').style.borderColor = '';
-    }
-
-    if (!confirmPassword.trim()) {
-      hasError = true;
-      errorDiv.innerHTML += '<p>Please confirm your password.</p>';
-      document.getElementById('exampleInputConfirmPassword1').style.borderColor = 'red';
-    } else if (password !== confirmPassword) {
-      hasError = true;
-      errorDiv.innerHTML += '<p>Passwords do not match.</p>';
-      document.getElementById('exampleInputPassword1').style.borderColor = 'red';
-      document.getElementById('exampleInputConfirmPassword1').style.borderColor = 'red';
-    } else {
-      document.getElementById('exampleInputConfirmPassword1').style.borderColor = '';
-    }
-
-    if (!document.getElementById('termsCheckbox').checked) {
-      hasError = true;
-      errorDiv.innerHTML += '<p>Please agree to the Terms & Conditions.</p>';
-    }
-
-    if (hasError) {
-    errorDiv.style.display = 'block';
-    return false;
-  }
-  // Registration successful, you can add your registration logic here.
-  // For now, we'll just display an alert:
-  storeUserDetails(email, password);
-
-  alert('Registration successful!');
-  window.location.href = './login.html';
-  return false;
-  }
-
-  // Function to fetch user data from local storage
-  function getUsersFromLocalStorage() {
-    const usersJSON = localStorage.getItem('userDetails');
-    return usersJSON ? JSON.parse(usersJSON) : [];
-  }
-
-  // Function to save user data to local storage
-  function saveUsersToLocalStorage(userDetails) {
-    localStorage.setItem('userDetails', JSON.stringify(userDetails));
-  }
-  </script>
+  <script src="../../js/login.js"></script>
 </body>
 
 </html>

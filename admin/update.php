@@ -87,19 +87,19 @@ header('Location: airline.php');
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Admin</title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../vendors/base/vendor.bundle.base.css">
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/add.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/add.css">
 
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="../images/favicon.png" />
 </head>
 
 <body>
@@ -218,14 +218,13 @@ header('Location: airline.php');
           <div class="row">  
             <div class="col-12 grid-margin">
                 <div class="container">
-                  <header>Add Flight</header>
+                  <header>Update Flight Details</header>
                     <form action="" method="POST">
                     <div class="form first">
                       <div class="details personal">
-                        <span class="title">Flight Details</span>
                         <div class="fields">
                         <div class="input-field">
-                            <label>Flight Name</label>
+                            <label class="text-primary">Flight Name</label>
                             <input type="text" name="flightname" placeholder="Enter Flight Name" value="<?php echo $flightname ?>" required>
                         </div>
                         <div class="input-field">
@@ -275,7 +274,7 @@ header('Location: airline.php');
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2018 <a href="https://www.urbanui.com/" target="_blank">Urbanui</a>. All rights reserved.</span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://www.urbanui.com/" target="_blank">Flight</a>. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
           </div>
         </footer>
@@ -287,12 +286,11 @@ header('Location: airline.php');
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
-  <script src="vendors/base/vendor.bundle.base.js"></script>
+  <script src="../vendors/base/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- inject:js -->
   <script src="js/off-canvas.js"></script>
   <script src="js/hoverable-collapse.js"></script>
-  <script src="js/template.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="js/file-upload.js"></script>
