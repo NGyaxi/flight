@@ -138,6 +138,7 @@ nav {
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
   gap: 1rem;
+  margin-left: 2rem;
 }
 
 .booking__container .input__content {
@@ -147,7 +148,7 @@ nav {
 .booking__container .form__group {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .booking__container .form__group span {
@@ -156,6 +157,7 @@ nav {
   color: var(--text-dark);
   background-color: var(--extra-light);
   border-radius: 1rem;
+  margin-left: 5rem;
 }
 
 .booking__container .input__group {

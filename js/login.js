@@ -51,7 +51,7 @@ function clearUserDetails() {
     const userDetails = getUserDetails();
   if (userDetails && email === userDetails.email && password === userDetails.password) {
     alert('Login successful!');
-    window.location.href = "../../index.html";
+    window.location.href = "/admin/index.php";
     return false;
   } else {
     errorDiv.innerHTML = '<p>Invalid email or password.</p>';
