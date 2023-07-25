@@ -1,3 +1,66 @@
+<?php
+
+
+
+$id = $_GET['id'] ?? null;
+if (!$id) {
+    header('Location: index.php');
+    exit;
+}
+
+$pdo = new PDO('mysql:host=localhost;port=3306;dbname=flight', 'root', '');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$statement = $pdo->prepare('SELECT * FROM airlines_table WHERE id = :id');
+$statement->bindValue(':id', $id);
+$statement->execute();
+$product = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+$errors = [];
+$id= $product['id'];
+$departFrom = $product['takeOffpoint'];
+$flightname = $product['flight_name'];
+$departTo =$product['destination'];
+$totalSeat =$product['totalSeat'];
+$departDate = $product['takeOffdate'];
+$route = $product['flight_name'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $departFrom = $_POST['departFrom'];
+    $flightname = $_POST['flightname'];
+    $totalSeat = $_POST['totalSeat'];
+    $departDate = $_POST['departDate'];
+    $departTo = $_POST['departTo'];
+    $route = $_POST['route'];
+
+
+    if (!$flightname) {
+        $errors[] = 'Flight Name is required';
+    }
+
+    if (empty($errors)) {
+        $statement = $pdo->prepare("INSERT INTO booking_table (id,flight_name, takeOffpoint, destination, 
+                                      totalSeat, takeOffdate,route)
+            VALUES (:id, :flight_name, :takeOffpoint, :destination, :totalSeat, :takeOffdate, :route)");
+        $statement->bindValue(':flight_name', $flightname);
+        $statement->bindValue(':takeOffpoint', $departFrom);
+        $statement->bindValue(':destination', $departTo);
+        $statement->bindValue(':takeOffdate', $departDate);
+        $statement->bindValue(':totalSeat', $totalSeat);
+        $statement->bindValue(':route', $route);
+        $statement->bindValue(':id', $id);
+
+       $pfd= $statement->execute();
+       
+    }
+
+
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -138,13 +201,13 @@
         <div class="content-wrapper">
           <div class="row">
             <div class="justify-content-center col-lg-12 grid-margin stretch-card">
-                <div class="container">
+                <div class="containers">
                   <header>Customer Detail</header>
                     <form  action="" method="POST">
-                        <div class="fields">
+                        <div class="fields row justify-content-between">
                         <div class="input-field">
                             <label class="text-primary">Fullname</label>
-                            <input type="text" name="flightname" placeholder="Enter Fulname" required>
+                            <input type="text" name="fullname" placeholder="Enter Fulname" required>
                         </div>
                         <div class="input-field">
                             <label class="text-primary">Cabin</label>
@@ -155,7 +218,9 @@
                                 <option>1st Class</option>
                             </select>
                         </div>
-                        <div class="input-field">
+                    </div>
+                    <div class="fields row justify-content-between">
+                            <div class="input-field">
                             <label class="text-primary">Take of Point</label>
                             <input type="text" name="contact" placeholder="eg. Ghana" required>
                         </div>
@@ -164,7 +229,7 @@
                           <input type="text" name="contact" placeholder="eg. Japan" required>
                         </div>
                     </div>
-                        <div class="fields">
+                        <div class="fields row justify-content-between">
                         <div class="input-field">
                             <label class="text-primary">Route</label>
                             <select class="text-primary" required name="route">
@@ -190,7 +255,7 @@
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2018 <a href="https://www.urbanui.com/" target="_blank">Urbanui</a>. All rights reserved.</span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://www.urbanui.com/" target="_blank">flight</a>. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
           </div>
         </footer>

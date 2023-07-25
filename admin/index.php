@@ -1,10 +1,25 @@
-<?php
-
-$pdo = new PDO('mysql:host=localhost;port=3306;dbname=flight', 'root', '');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$statement = $pdo->prepare('SELECT * FROM users where id=14');
-$statement->execute();
-$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+<?php require_once "../fg/controllerUserData.php"; ?>
+<?php 
+$email = $_SESSION['email'];
+if($email != false){
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+        $name = $fetch_info['name'];
+       
+       $sql = "SELECT * from users";
+       if ($result = mysqli_query($con, $sql)) {
+        $rowcount = mysqli_num_rows( $result );
+      }
+        $sql3 = "SELECT * from airlines_table";
+       if ($result = mysqli_query($con, $sql3)) {
+        $rowcount3 = mysqli_num_rows( $result );      
+        }
+    }
+}else{
+    header('Location: ../login.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +48,7 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
         <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
-          <a class="navbar-brand brand-logo" href="index.html"><img src="images/a.png" alt="logo"/></a>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="../images/a.png" alt="logo"/></a>
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-sort-variant"></span>
           </button>
@@ -92,14 +107,14 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <i class="mdi mdi-account-circle icon-lg text-primary"></i>
-              <span class="nav-profile-name">Admin</span>
+              <span class="nav-profile-name"><?php echo$name ?></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
                 <i class="mdi mdi-settings text-primary"></i>
                 Settings
               </a>
-              <a class="dropdown-item" href="./home.html">
+              <a class="dropdown-item" href="../logout.php">
                 <i class="mdi mdi-logout text-primary"></i>
                 Logout
               </a>
@@ -160,10 +175,6 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
                   <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
                     <i class="mdi mdi-clock-outline text-muted"></i>
                   </button>
-                  <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
-                    <i class="mdi mdi-plus text-muted"></i>
-                  </button>
-                  <button class="btn btn-primary mt-2 mt-xl-0">Download report</button>
                 </div>
               </div>
             </div>
@@ -186,7 +197,7 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
                             <small class="mb-1 text-muted">Total Users</small>
                             <div class="dropdown">
                               <a class="btn btn-secondary p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium" href="#" role="button" id="dropdownMenuLinkA"   aria-expanded="false">
-                                <h5 class="mb-0 d-inline-block">265500</h5>
+                                <h5 class="mb-0 d-inline-block"><?php echo$rowcount ?></h5>
                               </a>
                             </div>
                           </div>
@@ -195,7 +206,7 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
                           <i class="mdi mdi-airplane mr-3 icon-lg text-warning"></i>
                           <div class="d-flex flex-column justify-content-around">
                             <small class="mb-1 text-muted">Total Airlines</small>
-                            <h5 class="mr-2 mb-0">2233</h5>
+                            <h5 class="mr-2 mb-0"><?php echo$rowcount3 ?></h5>
                           </div>
                         </div>
                         <div class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">

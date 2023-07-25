@@ -3,9 +3,25 @@
 
 $pdo = new PDO('mysql:host=localhost;port=3306;dbname=flight', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$statement = $pdo->prepare('SELECT * FROM airlines_table ORDER BY id DESC');
-$statement->execute();
-$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+$mess="";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $departFrom = $_POST['departFrom'];
+    $departTo = $_POST['departTo'];
+    $route = $_POST['route'];
+
+$statement = $pdo->prepare('SELECT * FROM airlines_table WHERE takeOffpoint like :takeOffpoint ORDER BY id DESC');
+        $statement->bindValue(':takeOffpoint', $departFrom);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($results)) {
+          $mess="No Results Found";
+        }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -113,64 +129,6 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         </button>
       </div>
     </nav>
-                <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-                     <div class="card-body row">
-                  <h4 class="card-title">Search Result</h4>
-                  <div class="table-responsive pt-3">
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>
-                            Id
-                          </th>
-                          <th>
-                            Flight Name
-                          </th>
-                          <th>
-                            From
-                          </th>
-                          <th>
-                            To
-                          </th>
-                          <th>
-                            Avialible Seat
-                          </th>
-                          <th>
-                           Date
-                          </th>
-                          <th>
-                           Route
-                          </th>
-                          <th>
-                            Action
-                           </th>
-                        </tr>
-                      </thead>
-    <tbody>
-    <?php foreach ($results as $i => $result) { ?>
-        <tr>
-            <td><?php echo $result['id'] ?></td>
-            <td><?php echo $result['flight_name'] ?></td>
-            <td><?php echo $result['takeOffpoint'] ?></td>
-            <td><?php echo $result['destination'] ?></td>
-            <td><?php echo $result['totalSeat'] ?></td>
-            <td><?php echo $result['takeOffdate'] ?></td>
-            <td><?php echo $result['route'] ?></td>
-            <td>
-                <a href="details.php?id=<?php echo $result['id'] ?>" class="btn btn-sm btn-outline-success">Book</a>
-            </td>
-        </tr>
-    <?php } ?>
-    </tbody>
-                    </table>
-                  </div>
-                </div>
-    </div>
-  </div>
-</div>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:../../partials/_sidebar.html -->
@@ -220,19 +178,19 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="card-body">
             <div class="justify-content-center col-lg-12 grid-margin stretch-card">
-                <div class="container">
+                <div class="containers">
                   <header>Search Flight</header>
                     <form  action="" method="POST">
-                        <div class="fields">
+                        <div class="fields row">
                         <div class="input-field">
                             <label class="text-primary">Take of Point</label>
-                            <input type="text" name="contact" placeholder="From" required>
+                            <input type="text" name="departFrom" placeholder="From" required>
                         </div>
                         <div class="input-field">
                             <label class="text-primary">Arrival of Point</label>
-                            <input type="text" name="contact" placeholder="To" required>
+                            <input type="text" name="departTo" placeholder="To" required>
                         </div>
                     </div>
                         <div class="fields">
@@ -245,14 +203,68 @@ $results = $statement->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                        <button type="submit" class="btn btn-primary">
                             <span class="btnText">Search</span>
                         </button>
                   </form>
                 </div>     
             </div>
           </div>
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card" style="border: 1px solid black;">
+                <div class="card-body">
+                  <h4 class="card-title text-primary">Search Result</h4>
+                    <table  class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>
+                            Id
+                          </th>
+                          <th>
+                            Flight Name
+                          </th>
+                          <th>
+                            From
+                          </th>
+                          <th>
+                            To
+                          </th>
+                          <th>
+                            Avialible Seat
+                          </th>
+                          <th>
+                           Date
+                          </th>
+                          <th>
+                           Route
+                          </th>
+                          <th>
+                            Action
+                           </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php echo $mess ?>
+                      <?php foreach ($results as $i => $result) { ?>
+                          <tr>
+                              <td><?php echo $result['id'] ?></td>
+                              <td><?php echo $result['flight_name'] ?></td>
+                              <td><?php echo $result['takeOffpoint'] ?></td>
+                              <td><?php echo $result['destination'] ?></td>
+                              <td><?php echo $result['totalSeat'] ?></td>
+                              <td><?php echo $result['takeOffdate'] ?></td>
+                              <td><?php echo $result['route'] ?></td>
+                              <td>
+                              <a href="details.php?id=<?php echo $result['id'] ?>" class="btn btn-sm btn-outline-success">Book</a>
+                              </td>
+                          </tr>
+                      <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
         </div>
+      </div>
  
 
         <!-- content-wrapper ends -->

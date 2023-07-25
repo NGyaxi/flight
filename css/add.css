@@ -1,7 +1,6 @@
 
-.container{
+.containers{
     position: relative;
-    max-width: 900px;
     width: 100%;
     border-radius: 6px;
     padding: 30px;
@@ -9,13 +8,15 @@
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
-.container header{
+.containers header{
     position: relative;
     font-size: 20px;
+    left: -10px;
+    margin-bottom: 10px;
     font-weight: 600;
     color: #333;
 }
-.container header::before{
+.containers header::before{
     content: "";
     position: absolute;
     left: 0;
@@ -102,7 +103,7 @@ option{
 .input-field input[type="date"]:valid{
     color: #333;
 }
-.container form button, .backBtn{
+.containers form button, .backBtn{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -118,7 +119,7 @@ option{
     transition: all 0.3s linear;
     cursor: pointer;
 }
-.container form .btnText{
+.containers form .btnText{
     font-size: 18px;
     font-weight: 400;
 }
