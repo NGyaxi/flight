@@ -25,7 +25,7 @@ $flightname = $product['flight_name'];
 $departTo =$product['destination'];
 $totalSeat =$product['totalSeat'];
 $departDate = $product['takeOffdate'];
-$route = $product['flight_name'];
+$route = $product['flight_route'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];

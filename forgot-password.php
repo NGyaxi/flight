@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <title>Forgot Password</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fg/style.css">
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4 form">
                 <form action="forgot-password.php" method="POST" autocomplete="">
-                    <h2 class="text-center">Forgot Password</h2>
+                    <h2 class="text-center">Forgot Passwords</h2>
                     <p class="text-center">Enter your email address</p>
                     <?php
                         if(count($errors) > 0){
